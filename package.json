@@ -1,0 +1,26 @@
+{
+  "name": "nmc",
+  "version": "1.0.0",
+  "description": "nmc_nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shaw007134/nmc_nodejs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shaw007134/nmc_nodejs/issues"
+  },
+  "homepage": "https://github.com/Shaw007134/nmc_nodejs#readme",
+  "dependencies": {
+    "async": "^3.1.0",
+    "cheerio": "^1.0.0-rc.3",
+    "mongodb": "^3.4.1",
+    "mongoose": "^5.8.4",
+    "request": "^2.88.0"
+  }
+}
