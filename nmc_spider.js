@@ -1,8 +1,6 @@
 let http = require('http');
-let fs = require('fs');
 let cheerio = require('cheerio');
-let request = require('request');
-// let mongo = require('./mongodb_weather')
+let Weather = require('./mongodb_weather')
 
 var url = "http://www.nmc.cn/publish/forecast/AAH/hefei.html";
 
@@ -16,15 +14,28 @@ http.get(url, (res) => {
   });
   res.on('end', function(){
     var $ = cheerio.load(html);
-    var data = {  time:'',
-      temperature:'',
-      rainfall:'',
-      windspeed:'',
-      winddirection:'',
-      airpressure:'',
-      humidity:''};
-    var weather = $('.js','#day0').text().trim().replace(/(\n)/g,'').split('                       ');
-    console.log(weather);
+
+    var time = $('.first','#day0').text().replace(/(\n)/g,'').split('                       ').map(x => x.trim());
+    var temperature = $('.wd','#day0').text().replace(/(\n)/g,'').split('                       ').map(x => x.trim());
+    var rainfall = $('.js','#day0').text().replace(/(\n)/g,'').split('                       ').map(x => x.trim());
+    var windspeed = $('.winds','#day0').text().replace(/(\n)/g,'').split('                       ').map(x => x.trim());
+    var winddirection = $('.windd','#day0').text().replace(/(\n)/g,'').split('                       ').map(x => x.trim());
+    var airpressure = $('.qy','#day0').text().replace(/(\n)/g,'').split('                       ').map(x => x.trim());
+    var humidity = $('.xdsd','#day0').text().replace(/(\n)/g,'').split('                       ').map(x => x.trim());
+
+    for (var i = 1; i < time.length; i++) {
+      var weather_db = new Weather({
+        time: time[i],
+        temperature: temperature[i],
+        rainfall: rainfall[i],
+        windspeed: windspeed[i],
+        winddirection: winddirection[i],
+        airpressure: airpressure[i],
+        humidity: humidity[i]
+      });
+      weather_db.save(function (err) { 
+        if(err) console.log(err);
+       })
+    }
   })
-  
 });

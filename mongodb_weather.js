@@ -1,6 +1,12 @@
 let mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/weather', {useNewUrlParser: true});
+let db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.on('open', () => {
+  console.log('数据库连接成功');
+});
 let Schema = mongoose.Schema;
-let fileW = new Schema({
+let Weather = new Schema({
   time: String,
   temperature: String,
   rainfall: String,
@@ -9,13 +15,5 @@ let fileW = new Schema({
   airpressure: String,
   humidity: String,
 });
-let Weather = mongoose.model('Weather',fileW);
-let db = mongoose.connect('mongodb://127.0.0.1:27017/weather');
-db.connection.on('error', (err)=>{
-  console.log(`数据库连接失败：${err}`);
-})
-db.connection.on('open', () => {
-  console.log('数据库连接成功');
-});
-
-module.exports = {Film: Film};
+// let Weather = mongoose.model('Weather',fileW);
+module.exports = mongoose.model('Weather',Weather);
