@@ -15,5 +15,4 @@ let Weather = new Schema({
   airpressure: String,
   humidity: String,
 });
-// let Weather = mongoose.model('Weather',fileW);
 module.exports = mongoose.model('Weather',Weather);

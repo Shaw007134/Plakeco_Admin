@@ -12,7 +12,23 @@ app.use(allowCrossDomain);
 
 app.get('/realtime',(req,res)=>{
   http.get(url, (x) => {
-    // Do stuff with response
+    const { statusCode } = x;
+    const contentType = x.headers['content-type'];
+  
+    let error;
+    if (statusCode !== 200) {
+      error = new Error('Request Failed.\n' +
+                        `Status Code: ${statusCode}`);
+    } else if (!/^application\/json/.test(contentType)) {
+      error = new Error('Invalid content-type.\n' +
+                        `Expected application/json but received ${contentType}`);
+    }
+    if (error) {
+      console.error(error.message);
+      // Consume response data to free up memory
+      res.resume();
+      return;
+    }
     x.setEncoding('utf8');
     var rawData;
     x.on('data', (data)=>{
@@ -25,6 +41,8 @@ app.get('/realtime',(req,res)=>{
         console.error(e.message);
       }
     });
+  }).on('error', (e) => {
+    console.error(`Got error: ${e.message}`);
   });
 });
 
