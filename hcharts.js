@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
   getWeather();
 });
 
-setInterval(()=>{getWeather()},30*60*1000);
+setInterval(getWeather,30*60*1000);
 
 function getWeather(){
   var xhr = new XMLHttpRequest();
