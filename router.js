@@ -1,8 +1,8 @@
 const router = require('express').Router();
-const user = require('./model/user');
 const auth = require('./middleware/auth');
 const cors = require("./middleware/cors")
 const login = require('./controller/login');
+const main = require('./controller/main');
 const system = require('./controller/system');
 const fetch = require('./controller/fetch');
 
@@ -12,12 +12,11 @@ router.use(cors.cors);
 router.get('/realtime', fetch.realtime);
 
 //登陆
-// router.get('/login', login.showLogin);
-// router.post('/login', login.login);
+router.get('/login', login.showLogin);
+router.post('/login', login.login);
 //登陆后显示主页面
-router.use(auth.loginRequired);
 router.get('/main', main.showMain);
 //获取用户权限
-router.get('/userList', auth.authUserPermission, main.showList);
+// router.get('/userList', auth.authUserPermission, main.showList);
 
 module.exports = router;

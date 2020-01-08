@@ -1,7 +1,8 @@
 const express = require("express");
 const router = require("./router");
+const bodyParser = require("body-parser");
 const session = require("express-session");
-const redis = require('redis').createClient();
+const redis = require("redis").createClient();
 const redisStore = require("connect-redis")(session);
 const engine = require("ejs-mate");
 const app = express();
@@ -17,10 +18,18 @@ app.set("view engine", "ejs"); // render('index')
 app.use("/assets", express.static(__dirname + "/assets"));
 
 // parser
-app.use(express.json());
-var urlencodedParser = express.urlencoded({
-  extended: false
-});
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// app.use(express.json());
+// app.use(
+//   express.urlencoded({
+//     extended: false
+//   })
+// );
+// var urlencodedParser = express.urlencoded({
+//   extended: false
+// });
 
 // config session
 app.use(
@@ -33,26 +42,21 @@ app.use(
       client: redis
     }),
     saveUninitialized: false,
-    resave: false,
+    resave: false
     // Force the session identifier cookie to be set on every response.
-    cookie: {
-      maxAge: 1000 * 60 * 30
-    },
-    rolling: true
   })
 );
 
 //set locals to client side
-app.use((req, res, next) => {
-  res.locals.user = req.session.user;
-  next();
-});
-
+// app.use((req, res, next) => {
+//   res.locals.user = req.session.user;
+//   next();
+// });
 
 app.use("/", router);
 
 //handle error to be continued
 
-var server = app.listen(port, "127.0.0.1", function () {
+var server = app.listen(port, "127.0.0.1", function() {
   console.log(`App listening on ${port}`);
 });

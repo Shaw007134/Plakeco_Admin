@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Plakeco Admin</title>
+  <link rel="stylesheet" href="../assets/layui/css/layui.css">
+  <link rel="stylesheet" href="../assets/css/login.css">
+  <script src="../assets/layui/layui.js"></script>
+  <script src="../assets/js/login.js"></script>
+</head>
+
+<body>
+  <div class="login-container">
+    <div class="login-header">
+      <h1>系统登录</h1>
+    </div>
+    <div class="login-main">
+      <form action class="layui-form" method="post">
+        <div class="avatar">
+          <img src="../assets/img/avatar.jpg" width="100px">
+        </div>
+        <div class="layui-form-item">
+          <label for="" class="login-icon"><i class="layui-icon"></i></label>
+          <input type="text" name="name" lay-verify="required" placeholder="请输入用户名" class="layui-input">
+        </div>
+        <div class="layui-form-item">
+          <label for="" class="login-icon"><i class="layui-icon"></i></label>
+          <input type="password" name="pwd" required lay-verify="required|password" placeholder="请输入密码"
+            class="layui-input">
+        </div>
+        <div class="login-post">
+          <button class="layui-btn" lay-submit lay-filter="login">登录</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>
