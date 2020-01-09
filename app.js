@@ -10,16 +10,20 @@ const port = 10002;
 
 //view engine setup
 // use ejs-locals for all ejs templates:
-app.engine("ejs", engine);
-app.set("views", __dirname + "/views");
-app.set("view engine", "ejs"); // render('index')
+// app.engine("ejs", engine);
+// app.set("views", __dirname + "/views");
+// app.set("view engine", "ejs"); // render('index')
 
-// server static files
+// server filedirectory
 app.use("/assets", express.static(__dirname + "/assets"));
 
 // parser
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(
+  bodyParser.urlencoded({
+    extended: false
+  })
+);
 
 // app.use(express.json());
 // app.use(

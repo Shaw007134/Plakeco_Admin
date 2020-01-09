@@ -1,20 +1,24 @@
 const md5 = require("md5-node");
-const User = require("../model/user");
+const model = require("../model/user");
+const User = model.user;
+const connection = model.connection;
 
 var admin = new User({
   username: "root",
-  password: md5(admin)
+  password: md5("admin")
 });
 
 var test = new User({
   username: "test",
-  password: md5(test)
+  password: md5("test")
 });
 
-admin.save(function(err) {
+admin.save(function (err) {
   if (err) console.log(err);
 });
 
-test.save(function(err) {
+test.save(function (err) {
   if (err) console.log(err);
-});
+  console.log("saved");
+  connection.close();
+})

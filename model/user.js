@@ -13,4 +13,6 @@ let user = new Schema({
   password: String,
   page_url: []
 });
-module.exports = mongoose.model('user', user);
+const connection = db;
+module.exports.connection = connection;
+module.exports.user = mongoose.model('user', user);
