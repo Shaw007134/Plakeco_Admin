@@ -1,6 +1,5 @@
 const md5 = require("md5-node");
 const model = require("../model/user");
-const path = require("path");
 
 class loginController {
   async showLogin(req, res, next) {

@@ -16,7 +16,7 @@ var admin = {
   system_url: [{
       name: '权限查看',
       hasAuth: true,
-      path: '/findAll'
+      path: '/find'
     },
     {
       name: '权限管理',
@@ -45,13 +45,23 @@ var test = {
   }]
 };
 
-model.update('users', {
-  username: 'root'
-}, admin,(err, data)=>{
-  console.log("更新完成")
-})
-model.update('users', {
+// model.update('users', {
+//   username: 'root'
+// }, admin, (err, data) => {
+//   console.log("更新完成")
+// })
+// model.update('users', {
+//   username: 'test'
+// }, test, (err, data) => {
+//   console.log("更新完成")
+// })
+
+model.addTo('users', {
   username: 'test'
-}, test,(err, data)=>{
+}, {
+  system_url: {
+    name: 'addtoset'
+  }
+}, (err, data) => {
   console.log("更新完成")
 })

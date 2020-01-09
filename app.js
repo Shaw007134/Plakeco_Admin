@@ -19,7 +19,7 @@ app.use("/assets", express.static(__dirname + "/assets"));
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
-    extended: false
+    extended: true
   })
 );
 

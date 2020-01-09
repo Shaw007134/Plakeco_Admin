@@ -54,6 +54,23 @@ exports.update = function (collection, option1, option2, callback) {
     });
   });
 }
+
+//增添数据
+exports.addTo = function (collection, option1, option2, callback) {
+  __connectDB(function (err, dbo) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    dbo.collection(collection).updateOne(option1, {
+      $addToSet: option2
+    }, function (error, data) {
+      callback(error, data);
+    });
+  });
+}
+
+
 //删除数据. 
 exports.delete = function (collection, option, callback) {
   __connectDB(function (err, dbo) {

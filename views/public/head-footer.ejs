@@ -16,7 +16,7 @@
       <!-- 头部区域（可配合layui已有的水平导航） -->
       <ul class="layui-nav layui-layout-left">
         <% for(var i=0;i<systemItem.length;i++){ %>
-        <li class="layui-nav-item"><a href="javascript:;"
+        <li class="layui-nav-item"><a id=<%= systemItem[i].name %> href="javascript:;"
             data-href=<%= systemItem[i].path %>><%= systemItem[i].name %></a></li>
         <% }%>
         <!-- <li class="layui-nav-item" id="authView"><a href="javascript:;">权限查看</a></li>
@@ -53,45 +53,122 @@
       var tree = layui.tree;
 
       console.log('123')
-      // $('#authView').on('click', (e) => {
-      //   var main = $('#main-display');
-      //   var id = $('#user').text();
-      //   main.html(id);
-      //   main.append('<div id = "authTree"></div>')
-      //   var all = [];
-      //   $.ajax({
-      //     url: '/findAll',
-      //     type: 'get',
-      //     success: function (data) {
-      //       console.log(data);
-      //     }
-      //   })
-      //   var inst1 = tree.render({
-      //     elem: '#authTree' //绑定元素
-      //       ,
-      //     data: [{
-      //       title: '江西' //一级菜单
-      //         ,
-      //       children: [{
-      //         title: '南昌' //二级菜单
-      //           ,
-      //         children: [{
-      //           title: '高新区' //三级菜单
-      //           //…… //以此类推，可无限层级
-      //         }]
-      //       }]
-      //     }, {
-      //       title: '陕西' //一级菜单
-      //         ,
-      //       children: [{
-      //         title: '西安' //二级菜单
-      //       }]
-      //     }]
-      //   });
-      // })
-      // $('#authManage').on('click', (e) => {
-      //   var main = $('#main-display');
-      //   var id = $('#user').text();
-      // })
+      var all = [];
+      $('#权限查看').on('click', (e) => {
+        var main = $('#main-display');
+        if (all.length === 0) {
+          main.children().remove();
+          var id = $('#user').text();
+          main.html(id);
+          main.append('<div id = "authTree"></div>')
+
+          $.ajax({
+            url: '/find',
+            type: 'get',
+            success: function (data) {
+              console.log(data);
+              data.forEach(e => {
+                let page = [];
+                let system = [];
+                e.page_url.forEach(data => {
+                  if (data.hasAuth === true) {
+                    page.push({
+                      title: data.name,
+                      id: e.username + '-' + data.name
+                    })
+                  }
+                })
+                e.system_url.forEach(data => {
+                  if (data.hasAuth === true) {
+                    system.push({
+                      title: data.name,
+                      id: e.username + '-' + data.name
+                    })
+                  }
+                })
+                all.push({
+                  title: e.username,
+                  children: [{
+                    title: '模型权限',
+                    children: page,
+                    id: e.username + '-page_url'
+                  }, {
+                    title: '系统权限',
+                    children: system,
+                    id: e.username + '-system_url'
+                  }, ],
+                  id: e.username
+                })
+              })
+              tree.render({
+                elem: '#authTree',
+                data: all
+              });
+            }
+          })
+        }
+        tree.render({
+          elem: '#authTree',
+          data: all
+        })
+      })
+      $('#权限管理').on('click', (e) => {
+        var main = $('#main-display');
+        main.children().remove();
+        var id = $('#user').text();
+        main.html(id);
+        main.append('<div id = "authTree"></div>')
+        tree.render({
+          elem: '#authTree',
+          data: all,
+          edit: ['add', 'update', 'del'],
+          click: function (obj) {
+            layer.msg(JSON.stringify(obj.data));
+          },
+          operate: function (obj) {
+            var type = obj.type;
+            var data = obj.data
+            var elem = obj.elem;
+            console.log(type);
+            console.log(data);
+            var curr = data.id
+            console.log(curr);
+            if (type === 'add') {
+              if (curr)
+                return curr + '-';
+              else return 'no-id';
+            } else if (type === 'update') {
+              var title = elem.find('.layui-tree-txt').html();
+
+              if (data.id) {
+                data.id = data.id + title;
+                var temp = data.id.split('-');
+                var json = {};
+                console.log(temp);
+                json.username = temp[0];
+                if (temp.length === 3) {
+                  json[temp[1]] = {
+                    'name': temp[2]
+                  }
+                } else {
+                  json[temp[1]] = '';
+                }
+                console.log(json);
+                $.ajax({
+                  url: '/update',
+                  type: 'post',
+                  data: json,
+                  success: function (data) {
+                    console.log(data);
+                  }
+                })
+              }
+            } else if (type === 'del') {
+              console.log('删除 ' + elem.find('.layui-tree-txt').html())
+            }
+          }
+        })
+      })
+
     });
   </script>

@@ -21,7 +21,9 @@ router.get('/main', main.showMain);
 //获取用户权限
 router.get('/modelmanage', auth.authUserPermission, main.modelmanage);
 //获取所有用户权限
-router.get('/findAll', auth.authSystemPermission, system.findAll);
+router.get('/find', auth.authSystemPermission, system.find);
+//更新用户权限
+router.post('/update', system.update);
 //注销
 router.get('/logout', login.logout);
 router.get('/usercenter', main.usercenter)
