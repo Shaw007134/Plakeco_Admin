@@ -10,13 +10,17 @@ const fetch = require('./controller/fetch');
 router.use(cors.cors);
 //获取天气数据
 router.get('/realtime', fetch.realtime);
+//登录检测
+router.use(auth.loginRequired);
 
-//登陆
+//登录
 router.get('/login', login.showLogin);
 router.post('/login', login.login);
-//登陆后显示主页面
+//显示主页面
 router.get('/main', main.showMain);
 //获取用户权限
 // router.get('/userList', auth.authUserPermission, main.showList);
+//注销
+router.get('/logout', login.logout);
 
 module.exports = router;

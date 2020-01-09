@@ -1,7 +1,5 @@
 const md5 = require("md5-node");
 const model = require("../model/user");
-const user = model.user;
-const connection = model.connection;
 const path = require("path");
 
 class loginController {
@@ -13,28 +11,32 @@ class loginController {
 
   async login(req, res, next) {
     const param = req.body;
-    user.find({
+    model.find("users", {
         username: param.name,
         password: md5(param.pwd)
       },
-      (err, user) => {
+      (err, data) => {
+        console.log('连接数据库');
         if (err) {
           return;
         }
-        if (user && user.length > 0) {
-          req.session.user = user[0];
-          connection.close(() => {
-            console.log("登录成功，连接断开")
-          });
+        if (data && data.length > 0) {
+          req.session.user = data[0];
           res.redirect("/main");
         } else {
           res.send(
             "<script>alert('登录失败');location.href='/login';</script>"
           );
         }
-        // db.close();
       }
-    );
+    )
+  }
+
+  async logout(req, res, next) {
+    req.session.destroy((err) => {
+      if (err) console.log(err);
+      else res.redirect("/login");
+    })
   }
 }
 

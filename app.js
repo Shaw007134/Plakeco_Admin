@@ -46,8 +46,12 @@ app.use(
       client: redis
     }),
     saveUninitialized: false,
-    resave: false
+    resave: false,
     // Force the session identifier cookie to be set on every response.
+    cookie: {
+      maxAge: 1000 * 60 * 1
+    },
+    rolling: true
   })
 );
 
@@ -61,6 +65,6 @@ app.use("/", router);
 
 //handle error to be continued
 
-var server = app.listen(port, "127.0.0.1", function() {
+var server = app.listen(port, "127.0.0.1", function () {
   console.log(`App listening on ${port}`);
 });

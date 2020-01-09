@@ -1,11 +1,19 @@
 class auth {
   // 用户登陆检测
   async loginRequired(req, res, next) {
-    console.log(req.session);
-    if (!req.session || !req.session.user || !req.session.user.id) {
-      return res.redirect('/login');
+    console.log("登录检测");
+    const currPath = req.url;
+    if (currPath === "/login") {
+      next();
+    } else {
+      if (!req.session || !req.session.user || !req.session.user.username) {
+        return res.redirect('/login');
+      } else {
+        req.app.locals["userName"] = req.session.user.username;
+        // console.log(req.app.locals);
+        next();
+      }
     }
-    await next();
   }
 
   //获取用户权限
