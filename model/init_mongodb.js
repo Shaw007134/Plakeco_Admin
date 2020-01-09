@@ -12,7 +12,18 @@ var admin = {
     name: '模型管理',
     hasAuth: true,
     path: '/modelmanage'
-  }]
+  }],
+  system_url: [{
+      name: '权限查看',
+      hasAuth: true,
+      path: '/findAll'
+    },
+    {
+      name: '权限管理',
+      hasAuth: true,
+      path: '/updateAuth'
+    }
+  ]
 };
 
 var test = {
@@ -26,12 +37,21 @@ var test = {
     name: '模型管理',
     hasAuth: false,
     path: '/modelmanage'
+  }],
+  system_url: [{
+    name: '权限查看',
+    hasAuth: true,
+    path: '/find'
   }]
 };
 
 model.update('users', {
   username: 'root'
-}, admin)
+}, admin,(err, data)=>{
+  console.log("更新完成")
+})
 model.update('users', {
   username: 'test'
-}, test)
+}, test,(err, data)=>{
+  console.log("更新完成")
+})

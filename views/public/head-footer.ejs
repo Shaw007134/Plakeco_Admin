@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -14,28 +15,27 @@
       <div class="layui-logo">Plakeco 后台管理</div>
       <!-- 头部区域（可配合layui已有的水平导航） -->
       <ul class="layui-nav layui-layout-left">
-        <li class="layui-nav-item"><a href="">控制台</a></li>
-        <li class="layui-nav-item"><a href="">商品管理</a></li>
-        <li class="layui-nav-item"><a href="">用户</a></li>
+        <% for(var i=0;i<systemItem.length;i++){ %>
+        <li class="layui-nav-item"><a href="javascript:;"
+            data-href=<%= systemItem[i].path %>><%= systemItem[i].name %></a></li>
+        <% }%>
+        <!-- <li class="layui-nav-item" id="authView"><a href="javascript:;">权限查看</a></li>
+        <li class="layui-nav-item" id="authManage"><a href="javascript:;">权限管理</a></li> -->
+        <li class="layui-nav-item"><a href="javascript:;">用户</a></li>
         <li class="layui-nav-item">
-          <a href="javascript:;">其它系统</a>
+          <a href="javascript:;">其它</a>
           <dl class="layui-nav-child">
-            <dd><a href="">邮件管理</a></dd>
-            <dd><a href="">消息管理</a></dd>
-            <dd><a href="">授权管理</a></dd>
+            <dd><a href="/usercenter">用户中心</a></dd>
+            <dd><a href="">安全设置</a></dd>
           </dl>
         </li>
       </ul>
       <ul class="layui-nav layui-layout-right">
         <li class="layui-nav-item">
-          <a href="/usercenter" id="user">
+          <a href="/usercenter">
             <!-- <img src="http://t.cn/RCzsdCq" class="layui-nav-img"> -->
-            欢迎您, <%=userName%>
+            欢迎您, <span id="user"><%=userName%></span>
           </a>
-          <dl class="layui-nav-child">
-            <dd><a href="">基本资料</a></dd>
-            <dd><a href="">安全设置</a></dd>
-          </dl>
         </li>
         <li class="layui-nav-item"><a href="/logout">注销</a></li>
       </ul>
@@ -47,7 +47,51 @@
   </div>
   <script>
     //JavaScript代码区域
-    layui.use(["element"], function () {
+    layui.use(["element", "tree"], function () {
       var element = layui.element;
+      var $ = layui.jquery;
+      var tree = layui.tree;
+
+      console.log('123')
+      // $('#authView').on('click', (e) => {
+      //   var main = $('#main-display');
+      //   var id = $('#user').text();
+      //   main.html(id);
+      //   main.append('<div id = "authTree"></div>')
+      //   var all = [];
+      //   $.ajax({
+      //     url: '/findAll',
+      //     type: 'get',
+      //     success: function (data) {
+      //       console.log(data);
+      //     }
+      //   })
+      //   var inst1 = tree.render({
+      //     elem: '#authTree' //绑定元素
+      //       ,
+      //     data: [{
+      //       title: '江西' //一级菜单
+      //         ,
+      //       children: [{
+      //         title: '南昌' //二级菜单
+      //           ,
+      //         children: [{
+      //           title: '高新区' //三级菜单
+      //           //…… //以此类推，可无限层级
+      //         }]
+      //       }]
+      //     }, {
+      //       title: '陕西' //一级菜单
+      //         ,
+      //       children: [{
+      //         title: '西安' //二级菜单
+      //       }]
+      //     }]
+      //   });
+      // })
+      // $('#authManage').on('click', (e) => {
+      //   var main = $('#main-display');
+      //   var id = $('#user').text();
+      // })
     });
   </script>

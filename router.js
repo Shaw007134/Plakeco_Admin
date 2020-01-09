@@ -20,6 +20,8 @@ router.post('/login', login.login);
 router.get('/main', main.showMain);
 //获取用户权限
 router.get('/modelmanage', auth.authUserPermission, main.modelmanage);
+//获取所有用户权限
+router.get('/findAll', auth.authSystemPermission, system.findAll);
 //注销
 router.get('/logout', login.logout);
 router.get('/usercenter', main.usercenter)
