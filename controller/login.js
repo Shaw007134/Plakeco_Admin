@@ -4,19 +4,19 @@ const path = require("path");
 
 class loginController {
   async showLogin(req, res, next) {
-    res.sendFile("login.html", {
-      root: path.resolve(__dirname, "../views")
-    });
+    res.render("login", {});
   }
 
   async login(req, res, next) {
     const param = req.body;
-    model.find("users", {
+    model.find(
+      "users",
+      {
         username: param.name,
         password: md5(param.pwd)
       },
       (err, data) => {
-        console.log('连接数据库');
+        console.log("连接数据库");
         if (err) {
           return;
         }
@@ -29,14 +29,14 @@ class loginController {
           );
         }
       }
-    )
+    );
   }
 
   async logout(req, res, next) {
-    req.session.destroy((err) => {
+    req.session.destroy(err => {
       if (err) console.log(err);
       else res.redirect("/login");
-    })
+    });
   }
 }
 

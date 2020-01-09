@@ -1,7 +1,7 @@
 class auth {
   // 用户登陆检测
   async loginRequired(req, res, next) {
-    console.log("登录检测");
+    // console.log("登录检测");
     const currPath = req.url;
     if (currPath === "/login") {
       next();
@@ -10,6 +10,7 @@ class auth {
         return res.redirect('/login');
       } else {
         req.app.locals["userName"] = req.session.user.username;
+        req.app.locals["page_url"] = req.session.user.page_url;
         // console.log(req.app.locals);
         next();
       }
@@ -18,22 +19,26 @@ class auth {
 
   //获取用户权限
   async authUserPermission(req, res, next) {
-    if (!req.session || !req.session.menu || req.session.menu.length == 0) {
-      return res.send('抱歉，您无此权限！请联系管理员');
-    }
+    console.log("权限检测");
     let targetUrl = req.route.path;
-    let hasPower = false;
-    req.session.menu.forEach(el => {
-      if (el.page_url == targetUrl) {
-        hasPower = true;
+    let hasAuth = false;
+    req.app.locals["page_url"].some(el => {
+      if (el.path == targetUrl && el.hasAuth === true) {
+        hasAuth = true;
       }
     });
-    if (!hasPower) {
+    if (!hasAuth) {
+      // if (req.xhr) {
+      //   return res.json({
+      //     state: false,
+      //     msg: "抱歉，您无此权限！请联系管理员"
+      //   });
+      // }
       return res.send('抱歉，您无此权限！请联系管理员');
     }
+    console.log("检测通过");
     next();
   }
 }
-
 
 module.exports = new auth();

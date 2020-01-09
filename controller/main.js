@@ -1,12 +1,18 @@
-const path = require("path");
-
 class mainController {
   async showMain(req, res, next) {
-    res.sendFile("main.html", {
-      root: path.resolve(__dirname, "../views")
+    res.render("main", {
+      userName: req.app.locals["userName"],
+      listItem: req.app.locals["page_url"]
     });
+  }
+
+  async usercenter(req, res, next) {
+    res.render("usercenter", {});
+  }
+
+  async modelmanage(req, res, next) {
+    res.render("modelmanage", {});
   }
 }
 
 module.exports = new mainController();
-

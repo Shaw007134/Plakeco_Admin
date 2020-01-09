@@ -19,8 +19,8 @@ router.post('/login', login.login);
 //显示主页面
 router.get('/main', main.showMain);
 //获取用户权限
-// router.get('/userList', auth.authUserPermission, main.showList);
+router.get('/modelmanage', auth.authUserPermission, main.modelmanage);
 //注销
 router.get('/logout', login.logout);
-
+router.get('/usercenter', main.usercenter)
 module.exports = router;

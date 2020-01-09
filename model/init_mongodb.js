@@ -1,24 +1,37 @@
 const md5 = require("md5-node");
 const model = require("../model/user");
-const User = model.user;
-const connection = model.connection;
 
-var admin = new User({
+var admin = {
   username: "root",
-  password: md5("admin")
-});
+  password: md5("admin"),
+  page_url: [{
+    name: '模型查看',
+    hasAuth: true,
+    path: '/modelview'
+  }, {
+    name: '模型管理',
+    hasAuth: true,
+    path: '/modelmanage'
+  }]
+};
 
-var test = new User({
+var test = {
   username: "test",
-  password: md5("test")
-});
+  password: md5("test"),
+  page_url: [{
+    name: '模型查看',
+    hasAuth: true,
+    path: '/modelview'
+  }, {
+    name: '模型管理',
+    hasAuth: false,
+    path: '/modelmanage'
+  }]
+};
 
-admin.save(function (err) {
-  if (err) console.log(err);
-});
-
-test.save(function (err) {
-  if (err) console.log(err);
-  console.log("saved");
-  connection.close();
-})
+model.update('users', {
+  username: 'root'
+}, admin)
+model.update('users', {
+  username: 'test'
+}, test)

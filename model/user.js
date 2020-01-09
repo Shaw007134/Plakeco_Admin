@@ -14,7 +14,7 @@ function __connectDB(callback) {
     db.close();
   })
 }
-
+//查找数据
 exports.find = function (collection, option, callback) {
   __connectDB((err, user) => {
     if (err) {
@@ -26,4 +26,43 @@ exports.find = function (collection, option, callback) {
       callback(err, data);
     })
   })
+}
+
+//新增数据
+exports.insert = function (collection, option, callback) {
+  __connectDB(function (err, dbo) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    dbo.collection(collection).insertOne(option, function (error, data) {
+      callback(error, data);
+    });
+  });
+}
+//修改数据
+exports.update = function (collection, option1, option2, callback) {
+  __connectDB(function (err, dbo) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    dbo.collection(collection).updateOne(option1, {
+      $set: option2
+    }, function (error, data) {
+      callback(error, data);
+    });
+  });
+}
+//删除数据. 
+exports.delete = function (collection, option, callback) {
+  __connectDB(function (err, dbo) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    dbo.collection(collection).deleteOne(option, function (error, data) {
+      callback(error, data);
+    });
+  });
 }
