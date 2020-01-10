@@ -79,3 +79,210 @@ db.once('open', function() {
     root.save();
     // db.close();
 });
+
+
+// <!-- <div id="day0"> 
+// <div class="layui-row layui-col-space1" id="time"> 
+//  <div class="layui-col-sm2 layui-col-sm-offset1">
+//   精细预报
+//  </div> 
+//  <div class="layui-col-sm1">
+//   14:00
+//  </div> 
+//  <div class="layui-col-sm1">
+//   17:00
+//  </div> 
+//  <div class="layui-col-sm1">
+//   20:00
+//  </div> 
+//  <div class="layui-col-sm1">
+//   23:00
+//  </div> 
+//  <div class="layui-col-sm1">
+//   07日02:00
+//  </div> 
+//  <div class="layui-col-sm1">
+//   05:00
+//  </div> 
+//  <div class="layui-col-sm1">
+//   08:00
+//  </div> 
+//  <div class="layui-col-sm1">
+//   11:00
+//  </div> 
+// </div> 
+// <div class="layui-row layui-col-space1" id="temperature"> 
+//   <div class="layui-col-sm2 layui-col-sm-offset1">
+//    气温
+//   </div> 
+//   <div class="layui-col-sm1">
+//    8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//    8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//  </div> 
+//  <div class="layui-row layui-col-space1" id="rainfall"> 
+//   <div class="layui-col-sm2 layui-col-sm-offset1">
+//    降水
+//   </div> 
+//   <div class="layui-col-sm1">
+//    8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//    8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//  </div> 
+//  <div class="layui-row layui-col-space1" id="windspeed"> 
+//   <div class="layui-col-sm2 layui-col-sm-offset1">
+//    风速
+//   </div> 
+//   <div class="layui-col-sm1">
+//    8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//    8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//  </div> 
+//  <div class="layui-row layui-col-space1" id="winddirection"> 
+//   <div class="layui-col-sm2 layui-col-sm-offset1">
+//    风向
+//   </div> 
+//   <div class="layui-col-sm1">
+//    8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//    8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//  </div> 
+//  <div class="layui-row layui-col-space1" id="airpressure"> 
+//   <div class="layui-col-sm2 layui-col-sm-offset1">
+//    气压
+//   </div> 
+//   <div class="layui-col-sm1">
+//    8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//    8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//  </div> 
+//  <div class="layui-row layui-col-space1" id="humidity"> 
+//   <div class="layui-col-sm2 layui-col-sm-offset1">
+//    相对湿度
+//   </div> 
+//   <div class="layui-col-sm1">
+//    8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//    8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//   <div class="layui-col-sm1">
+//     8.4℃
+//   </div> 
+//  </div> 
+// </div> -->
