@@ -24,6 +24,9 @@ router.get('/modelmanage', auth.authUserPermission, main.modelmanage);
 router.get('/find', auth.authSystemPermission, system.find);
 //更新用户权限
 router.post('/update', system.update);
+//删除用户权限
+router.post('/delete', system.delete);
+
 //注销
 router.get('/logout', login.logout);
 router.get('/usercenter', main.usercenter)

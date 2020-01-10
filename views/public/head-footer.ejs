@@ -51,111 +51,136 @@
       var element = layui.element;
       var $ = layui.jquery;
       var tree = layui.tree;
+      var main = $('#main-display');
+      var treeData = [];
+      console.log(main.children())
 
-      console.log('123')
-      var all = [];
+      function fetchAll(callback) {
+        $.ajax({
+          url: '/find',
+          type: 'get',
+          success: function (data) {
+            console.log(data);
+            var all = [];
+            data.forEach(e => {
+              let page = [];
+              let system = [];
+              e.page_url.forEach(data => {
+                if (data.hasAuth === true) {
+                  page.push({
+                    title: data.name,
+                    id: e.username + '-page_url-' + data.name
+                  })
+                }
+              })
+              e.system_url.forEach(data => {
+                if (data.hasAuth === true) {
+                  system.push({
+                    title: data.name,
+                    id: e.username + '-system_url-' + data.name
+                  })
+                }
+              })
+              all.push({
+                title: e.username,
+                children: [{
+                  title: '模型权限',
+                  children: page,
+                  id: e.username + '-page_url'
+                }, {
+                  title: '系统权限',
+                  children: system,
+                  id: e.username + '-system_url'
+                }, ],
+                id: e.username
+              })
+            })
+            callback(all);
+          }
+        })
+      }
       $('#权限查看').on('click', (e) => {
-        var main = $('#main-display');
-        if (all.length === 0) {
-          main.children().remove();
+        console.log('clicked authView')
+        if (main.children().length === 0) {
           var id = $('#user').text();
           main.html(id);
           main.append('<div id = "authTree"></div>')
-
-          $.ajax({
-            url: '/find',
-            type: 'get',
-            success: function (data) {
-              console.log(data);
-              data.forEach(e => {
-                let page = [];
-                let system = [];
-                e.page_url.forEach(data => {
-                  if (data.hasAuth === true) {
-                    page.push({
-                      title: data.name,
-                      id: e.username + '-' + data.name
-                    })
-                  }
-                })
-                e.system_url.forEach(data => {
-                  if (data.hasAuth === true) {
-                    system.push({
-                      title: data.name,
-                      id: e.username + '-' + data.name
-                    })
-                  }
-                })
-                all.push({
-                  title: e.username,
-                  children: [{
-                    title: '模型权限',
-                    children: page,
-                    id: e.username + '-page_url'
-                  }, {
-                    title: '系统权限',
-                    children: system,
-                    id: e.username + '-system_url'
-                  }, ],
-                  id: e.username
-                })
-              })
-              tree.render({
-                elem: '#authTree',
-                data: all
-              });
-            }
-          })
         }
-        tree.render({
-          elem: '#authTree',
-          data: all
+        fetchAll((ele) => {
+          tree.render({
+            elem: '#authTree',
+            data: ele,
+            id: 'authTree'
+          });
         })
       })
       $('#权限管理').on('click', (e) => {
-        var main = $('#main-display');
-        main.children().remove();
-        var id = $('#user').text();
-        main.html(id);
-        main.append('<div id = "authTree"></div>')
-        tree.render({
-          elem: '#authTree',
-          data: all,
-          edit: ['add', 'update', 'del'],
-          click: function (obj) {
-            layer.msg(JSON.stringify(obj.data));
-          },
-          operate: function (obj) {
-            var type = obj.type;
-            var data = obj.data
-            var elem = obj.elem;
-            console.log(type);
-            console.log(data);
-            var curr = data.id
-            console.log(curr);
-            if (type === 'add') {
-              if (curr)
-                return curr + '-';
-              else return 'no-id';
-            } else if (type === 'update') {
-              var title = elem.find('.layui-tree-txt').html();
+        if (main.children().length === 0) {
+          var id = $('#user').text();
+          main.html(id);
+          main.append('<div id = "authTree"></div>')
+        }
+        fetchAll((ele) => {
+          tree.render({
+            elem: '#authTree',
+            data: ele,
+            id: 'authTree',
+            edit: ['add', 'update', 'del'],
+            operate: function (obj) {
+              var type = obj.type;
+              var data = obj.data
+              var elem = obj.elem;
+              console.log(type);
 
-              if (data.id) {
-                data.id = data.id + title;
-                var temp = data.id.split('-');
-                var json = {};
+              if (type === 'add') {
+                if (data.id)
+                  return data.id + '-';
+                else return 'no-id';
+              } else if (type === 'update') {
+                var title = elem.find('.layui-tree-txt').html();
+                console.log(data)
+                if (data.id) {
+                  var temp = data.id.split('-');
+                  var json = {};
+                  console.log(temp);
+                  json.username = temp[0];
+                  if (temp.length === 3) {
+                    json[temp[1]] = {
+                      'name': title,
+                      'hasAuth': true
+                    }
+                  } else {
+                    json[temp[1]] = '';
+                  }
+                  console.log(json);
+                  $.ajax({
+                    url: '/update',
+                    type: 'post',
+                    data: json,
+                    success: function (data) {
+                      console.log(data);
+                    }
+                  })
+                }
+              } else if (type === 'del') {
+                var title = elem.find('.layui-tree-txt').html();
+                console.log(data)
+                if (data.id) {
+                  var temp = data.id.split('-');
+                  var json = {};
+                }
                 console.log(temp);
                 json.username = temp[0];
                 if (temp.length === 3) {
                   json[temp[1]] = {
-                    'name': temp[2]
+                    'name': title
                   }
                 } else {
                   json[temp[1]] = '';
                 }
                 console.log(json);
                 $.ajax({
-                  url: '/update',
+                  url: '/delete',
                   type: 'post',
                   data: json,
                   success: function (data) {
@@ -163,10 +188,8 @@
                   }
                 })
               }
-            } else if (type === 'del') {
-              console.log('删除 ' + elem.find('.layui-tree-txt').html())
             }
-          }
+          })
         })
       })
 

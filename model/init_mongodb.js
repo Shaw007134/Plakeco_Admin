@@ -1,7 +1,7 @@
 const md5 = require("md5-node");
 const model = require("../model/user");
 
-var admin = {
+var root = {
   username: "root",
   password: md5("admin"),
   page_url: [{
@@ -47,7 +47,7 @@ var test = {
 
 // model.update('users', {
 //   username: 'root'
-// }, admin, (err, data) => {
+// }, root, (err, data) => {
 //   console.log("更新完成")
 // })
 // model.update('users', {
@@ -56,12 +56,9 @@ var test = {
 //   console.log("更新完成")
 // })
 
-model.addTo('users', {
-  username: 'test'
-}, {
-  system_url: {
-    name: 'addtoset'
-  }
-}, (err, data) => {
+model.insert('users', root, (err, data) => {
+  console.log("更新完成")
+})
+model.insert('users', test, (err, data) => {
   console.log("更新完成")
 })

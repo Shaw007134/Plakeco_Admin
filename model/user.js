@@ -83,3 +83,18 @@ exports.delete = function (collection, option, callback) {
     });
   });
 }
+
+//删除嵌套数组元素. 
+exports.pull = function (collection, option1, option2, callback) {
+  __connectDB(function (err, dbo) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    dbo.collection(collection).update(option1, {
+      $pull: option2
+    }, function (error, data) {
+      callback(error, data);
+    });
+  });
+}
