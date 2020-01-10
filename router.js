@@ -18,14 +18,15 @@ router.get('/login', login.showLogin);
 router.post('/login', login.login);
 //显示主页面
 router.get('/main', main.showMain);
-//获取用户权限
+//获取模型页面权限
 router.get('/modelmanage', auth.authUserPermission, main.modelmanage);
-//获取所有用户权限
+router.get('/modelview', auth.authUserPermission, main.modelview);
+//获取系统权限
 router.get('/find', auth.authSystemPermission, system.find);
-//更新用户权限
-router.post('/update', system.update);
-//删除用户权限
-router.post('/delete', system.delete);
+//更新系统权限
+router.post('/update', auth.authSystemPermission, system.update);
+//删除系统权限
+router.post('/delete', auth.authSystemPermission, system.delete);
 
 //注销
 router.get('/logout', login.logout);

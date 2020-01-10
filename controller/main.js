@@ -14,6 +14,10 @@ class mainController {
   async modelmanage(req, res, next) {
     res.render("modelmanage", {});
   }
+
+  async modelview(req, res, next) {
+    res.render("modelview", {});
+  }
 }
 
 module.exports = new mainController();

@@ -19,8 +19,6 @@
         <li class="layui-nav-item"><a id=<%= systemItem[i].name %> href="javascript:;"
             data-href=<%= systemItem[i].path %>><%= systemItem[i].name %></a></li>
         <% }%>
-        <!-- <li class="layui-nav-item" id="authView"><a href="javascript:;">权限查看</a></li>
-        <li class="layui-nav-item" id="authManage"><a href="javascript:;">权限管理</a></li> -->
         <li class="layui-nav-item"><a href="javascript:;">用户</a></li>
         <li class="layui-nav-item">
           <a href="javascript:;">其它</a>
@@ -53,14 +51,12 @@
       var tree = layui.tree;
       var main = $('#main-display');
       var treeData = [];
-      console.log(main.children())
 
       function fetchAll(callback) {
         $.ajax({
           url: '/find',
           type: 'get',
           success: function (data) {
-            console.log(data);
             var all = [];
             data.forEach(e => {
               let page = [];
@@ -77,7 +73,7 @@
                 if (data.hasAuth === true) {
                   system.push({
                     title: data.name,
-                    id: e.username + '-system_url-' + data.name
+                    id: e.username + '-system_url-' + data.name,
                   })
                 }
               })
@@ -90,9 +86,11 @@
                 }, {
                   title: '系统权限',
                   children: system,
+                  spread: true,
                   id: e.username + '-system_url'
                 }, ],
-                id: e.username
+                id: e.username,
+                spread: true,
               })
             })
             callback(all);
@@ -101,25 +99,31 @@
       }
       $('#权限查看').on('click', (e) => {
         console.log('clicked authView')
-        if (main.children().length === 0) {
-          var id = $('#user').text();
-          main.html(id);
-          main.append('<div id = "authTree"></div>')
-        }
+        // if ($('#authTree').length === 0) {
+        var id = $('#user').text();
+        main.html('');
+        main.append(
+          '<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;"><legend>' + id +
+          ' 权限查看</legend></fieldset>')
+        main.append('<div id = "authTree"></div>')
+        // }
         fetchAll((ele) => {
           tree.render({
             elem: '#authTree',
             data: ele,
-            id: 'authTree'
+            id: 'authTree',
           });
         })
       })
       $('#权限管理').on('click', (e) => {
-        if (main.children().length === 0) {
-          var id = $('#user').text();
-          main.html(id);
-          main.append('<div id = "authTree"></div>')
-        }
+        // if (main.children().length === 0) {
+        var id = $('#user').text();
+        main.html('');
+        main.append(
+          '<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;"><legend>' + id +
+          ' 权限编辑</legend></fieldset>')
+        main.append('<div id = "authTree"></div>')
+        // }
         fetchAll((ele) => {
           tree.render({
             elem: '#authTree',
@@ -138,11 +142,9 @@
                 else return 'no-id';
               } else if (type === 'update') {
                 var title = elem.find('.layui-tree-txt').html();
-                console.log(data)
                 if (data.id) {
                   var temp = data.id.split('-');
                   var json = {};
-                  console.log(temp);
                   json.username = temp[0];
                   if (temp.length === 3) {
                     json[temp[1]] = {
@@ -152,24 +154,21 @@
                   } else {
                     json[temp[1]] = '';
                   }
-                  console.log(json);
                   $.ajax({
                     url: '/update',
                     type: 'post',
                     data: json,
                     success: function (data) {
-                      console.log(data);
+                      console.log(data.result);
                     }
                   })
                 }
               } else if (type === 'del') {
                 var title = elem.find('.layui-tree-txt').html();
-                console.log(data)
                 if (data.id) {
                   var temp = data.id.split('-');
                   var json = {};
                 }
-                console.log(temp);
                 json.username = temp[0];
                 if (temp.length === 3) {
                   json[temp[1]] = {
@@ -178,13 +177,12 @@
                 } else {
                   json[temp[1]] = '';
                 }
-                console.log(json);
                 $.ajax({
                   url: '/delete',
                   type: 'post',
                   data: json,
                   success: function (data) {
-                    console.log(data);
+                    console.log(data.result);
                   }
                 })
               }
@@ -192,6 +190,5 @@
           })
         })
       })
-
     });
   </script>

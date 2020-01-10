@@ -26,7 +26,77 @@
 
   <div class="layui-body">
     <!-- 内容主体区域 -->
-    <div style="padding: 15px;" id="main-display">内容主体区域</div>
+    <div style="padding: 15px;" id="main-display">
+      <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>业务领域</legend>
+      </fieldset>
+
+      <div style="padding: 20px; background-color: #F2F2F2;">
+        <div class="layui-row layui-col-space15">
+          <div class="layui-col-md6">
+            <div class="layui-card">
+              <div class="layui-card-header">后台业务服务</div>
+              <div class="layui-card-body">
+                用户角色权限服务系统<br>
+                流域监测控制服务系统
+              </div>
+            </div>
+          </div>
+          <div class="layui-col-md6">
+            <div class="layui-card">
+              <div class="layui-card-header">流域大数据库</div>
+              <div class="layui-card-body">
+                气象沉降，地信基础，经济社会，市政设施<br>
+                水系特征，自然模型，模型IO
+              </div>
+            </div>
+          </div>
+          <div class="layui-col-md12">
+            </fieldset>
+            <div class="layui-collapse" lay-filter="test">
+              <div class="layui-colla-item">
+                <h2 class="layui-colla-title">监测控制体系</h2>
+                <div class="layui-colla-content">
+                  <p class="layui-card-body" style="background-color: white;">河道核心数据监测软硬一体化系统<br>
+                    点源监测软硬一体化系统<br>
+                    非点源监测软硬一体化系统<br>
+                    厂站测控代理软硬一体化系统<br>
+                    云端优化调度控制算法智能代理<br></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+        <legend>项目进度</legend>
+      </fieldset>
+      <ul class="layui-timeline">
+        <li class="layui-timeline-item">
+          <i class="layui-icon layui-timeline-axis"></i>
+          <div class="layui-timeline-content layui-text">
+            <h3 class="layui-timeline-title">1月10号</h3>
+            <p>
+              沙河项目阶段性汇报
+              <br>在项目组成员的辛苦工作，目前沙河项目推进良好
+              <br>沙河项目的意义比较重大，可以作为一个样本案例 <i class="layui-icon"></i>
+            </p>
+          </div>
+        </li>
+        <li class="layui-timeline-item">
+          <i class="layui-icon layui-timeline-axis"></i>
+          <div class="layui-timeline-content layui-text">
+            <h3 class="layui-timeline-title">1月1号</h3>
+            <p>全体参加年度会议，会议主题</p>
+            <ul>
+              <li>2019年工作总结</li>
+              <li>2020年工作安排及规划</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 </body>
