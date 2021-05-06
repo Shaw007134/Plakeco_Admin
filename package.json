@@ -22,7 +22,7 @@
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
-    "highcharts": "^8.0.0",
+    "highcharts": "^9.0.0",
     "md5-node": "^1.0.1",
     "mongodb": "^3.4.1",
     "redis": "^2.8.0"
